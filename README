@@ -1,0 +1,11 @@
+"logfile" is a parser which converts my psychophysics experiment log
+files (in an ad-hoc format based around evaluable Matlab expressions)
+into a series of statements evaluable in R (by the function
+translator.R in the parent directory. Thus, it translates a subset of
+Matlab syntax into R.  It is written using flex and bison for parser
+generation parser.
+
+"strbuilder" has some simple routines to build long strings out of
+linked lists joining smaller strings, and is used by logfile.
+
+-Peter Meilstrup
