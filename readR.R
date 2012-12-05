@@ -126,12 +126,11 @@ loadData <- function(infile, outfile) {
     0
   }
 
-
   ##we rely on an external parser to translate text into evaluable R expressions.
   if (grepl("\\.gz$", infile)) {
-    pip <- base::pipe(sprintf('gzcat "%s" | ./logfile-reader/logfile', infile), 'r')
+    pip <- base::pipe(sprintf('gzcat "%s" | %s', infile, paste(sep='', getScriptDirectory(), '/', 'logfile') ), 'r')
   } else {
-    pip <- base::pipe(sprintf('./logfile-reader/logfile < "%s"', infile), 'r')
+    pip <- base::pipe(sprintf('%s < "%s"', paste(sep='', getScriptDirectory(), '/', 'logfile'), infile), 'r')
   }
   on.exit(close(pip))
 
@@ -177,7 +176,19 @@ loadData <- function(infile, outfile) {
   invisible(0)
 }
 
+getScriptDirectory <- function() {
+  #the best guass at the directory of the current script
+  argv <- commandArgs(trailingOnly = FALSE)
+  base_dir <- dirname(substring(argv[grep("--file=", argv)], 8))
+  if (length(base_dir) == 0) {
+    probe <- function(x) x+1
+    base_dir <- getSrcDirectory(probe)
+  }
+  base_dir
+}
+
 if ("--slave" %in% commandArgs()) {##RScript...
   my.args <- commandArgs(trailingOnly=TRUE)
   do.call("loadData", as.list(my.args))
 }
+
