@@ -1,0 +1,5 @@
+logfile
+*.tab.c
+*.yy.c
+*.o
+*_test

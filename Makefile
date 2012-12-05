@@ -1,4 +1,6 @@
 #build our flex/bison logfile to R converter
+.DEFAULT_GOAL = all
+
 strbuilder_test: strbuilder.c strbuilder_test.c strbuilder.h
 	gcc -o $@ strbuilder.c strbuilder_test.c
 
