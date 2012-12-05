@@ -1,5 +1,5 @@
 logfile
-*.tab.c
-*.yy.c
+*.tab.*
 *.o
 *_test
+*.yy.*

@@ -11,10 +11,10 @@ strbuilder_test: strbuilder.c strbuilder_test.c strbuilder.h
 	bison -d -v $<
 	touch $@
 
-%.tab.c: %.y %.y.DONE
+%.tab.c: %.y %.tab.h %.y.DONE
 	true
 
-%.tab.h: %.tab.c %.y.DONE
+%.tab.h: %.y.DONE
 	true
 
 %.o: %.c

@@ -129,9 +129,9 @@ loadData <- function(infile, outfile) {
 
   ##we rely on an external parser to translate text into evaluable R expressions.
   if (grepl("\\.gz$", infile)) {
-    pip <- base::pipe(sprintf('gzcat "%s" | ./yakshave/logfile', infile), 'r')
+    pip <- base::pipe(sprintf('gzcat "%s" | ./logfile-reader/logfile', infile), 'r')
   } else {
-    pip <- base::pipe(sprintf('./yakshave/logfile < "%s"', infile), 'r')
+    pip <- base::pipe(sprintf('./logfile-reader/logfile < "%s"', infile), 'r')
   }
   on.exit(close(pip))
 
