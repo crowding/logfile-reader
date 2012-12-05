@@ -1,5 +1,6 @@
 logfile
 logfile.lexer
+logfile.output
 *.tab.*
 *.o
 *_test
