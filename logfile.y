@@ -20,11 +20,11 @@ const char *preamble =
 
 /*declare tokens*/
 %token <s> NUMBER WORD DOTWORD QUOTED
-%token <s> BEGIN_ TRIGGER END EYE_DATA AUDIO_DATA ERROR_ REWARD FRAME_SKIP FRAME_COUNT EVENT_CODE AUDIO_UNDERFLOW AUDIO_SAMPLE
+%token <s> BEGIN_ TRIGGER END EYE_DATA AUDIO_DATA ERROR_ REWARD FRAME_SKIP FRAME_COUNT EVENT_CODE AUDIO_UNDERFLOW AUDIO_SAMPLE FLUID
 %token <i> EOL EQUAL LPAREN RPAREN LBRACKET RBRACKET LBRACE RBRACE COMMA SEMICOLON COLON
 
 %type <i> datafile line
-%type <s> begin word words eyeData audioData data literalData matrixContents fullMatrixRow partMatrixRow multipleMatrixRows fcall arguments assignment address addressSuffix addressSuffixes trigger structfields structfield reward frameSkip frameCount eventCode audioUnderflow audioSample error_
+%type <s> begin word words eyeData audioData data literalData matrixContents fullMatrixRow partMatrixRow multipleMatrixRows fcall arguments assignment address addressSuffix addressSuffixes trigger structfields structfield reward frameSkip frameCount eventCode audioUnderflow audioSample error_ fluid
 
 %error-verbose
 
@@ -48,6 +48,7 @@ begin optionalSemicolon {FINISH_LINE( $$, $1 )}
  | assignment optionalSemicolon {FINISH_LINE( $$, $1 )}
  | trigger {FINISH_LINE( $$, $1 )}
  | reward optionalSemicolon {FINISH_LINE( $$, $1 )}
+ | fluid optionalSemicolon {FINISH_LINE( $$,$1 )}
  | frameSkip optionalSemicolon {FINISH_LINE( $$, $1 )}
  | frameCount optionalSemicolon {FINISH_LINE( $$, $1 )}
  | eventCode optionalSemicolon {FINISH_LINE( $$, $1 )}
@@ -98,6 +99,7 @@ word: /* all things that are "words" although some are tokenized
   | EYE_DATA
   | AUDIO_DATA
   | ERROR_
+  | FLUID
   | REWARD
   | FRAME_SKIP
   | EVENT_CODE
@@ -119,14 +121,16 @@ AUDIO_DATA data { $$ = strb_append(strb_append(strb_const("audioData("), $2), st
 
 error_:
 ERROR_ word COLON word {
-  $$ = strb_append(strb_append(strb_append(strb_append(
-                                                       strb_const("error(class=\""), 
-                                                       $2), 
-                                           strb_const("\", identifier=\"")),
-                               $4),
-                   strb_const("\")")); 
+  $$ = strb_build(strb_const("error(class=\""), $2, strb_const("\", identifier=\""), $4, strb_const("\")"), NULL);
 }
-| ERROR_ word {$$ = strb_append(strb_append(strb_const("error(identifier=\""), $2), strb_const("\"")); }
+| ERROR_ word {
+    $$ = strb_build(strb_const("error(identifier=\""), $2, strb_const("\""), NULL); }
+;
+
+fluid:
+FLUID structfields {
+  $$ = strb_build(strb_const("storeTrigger(name=\"FLUID\", "), $2, strb_const(")"), NULL);
+}
 ;
 
 data:

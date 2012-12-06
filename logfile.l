@@ -28,6 +28,7 @@
 "ERROR"                         {CAPTURE(ERROR_)          }
 "REWARD"                        {CAPTURE(REWARD)          }
 "FRAME_SKIP"                    {CAPTURE(FRAME_SKIP)      }
+"FLUID"                         {CAPTURE(FLUID)           }
 "FRAME_COUNT"                   {CAPTURE(FRAME_COUNT)     }
 "EVENT_CODE"                    {CAPTURE(EVENT_CODE)      }
 "AUDIO_UNDERFLOW"               {CAPTURE(AUDIO_UNDERFLOW) }
