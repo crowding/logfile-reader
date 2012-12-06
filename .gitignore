@@ -1,6 +1,8 @@
 logfile
 logfile.lexer
 logfile.output
+example.translated
+example.RData
 *.tab.*
 *.o
 *_test

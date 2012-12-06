@@ -27,4 +27,13 @@ logfile: logfile.yy.c logfile.tab.c strbuilder.o
 %.lexer: %.yy.c
 	gcc -o $@ $^ -lfl -D TOKEN_TEST
 
-all: logfile logfile.lexer strbuilder_test
+example.translated: example.data logfile
+	./logfile < $< > $@
+
+example.RData: example.data readR.R logfile
+	Rscript readR.R $< $@
+
+all: logfile logfile.lexer strbuilder_test example.translated example.RData
+
+clean:
+	git clean -dfx

@@ -25,6 +25,7 @@
 "END"                           {CAPTURE(END)             }
 "EYE_DATA"                      {CAPTURE(EYE_DATA)        }
 "AUDIO_DATA"                    {CAPTURE(AUDIO_DATA)      }
+"ERROR"                         {CAPTURE(ERROR_)          }
 "REWARD"                        {CAPTURE(REWARD)          }
 "FRAME_SKIP"                    {CAPTURE(FRAME_SKIP)      }
 "FRAME_COUNT"                   {CAPTURE(FRAME_COUNT)     }

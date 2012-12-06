@@ -105,6 +105,10 @@ loadData <- function(infile, outfile) {
 
   zeros <- function(...) array(0, dim=c(...));
 
+  error <- function(class="", identifier="") {
+    storeTrigger(name="ERROR", class=class, identifier=identifier)
+  }
+  
   eyeData <- function(x) {
     if (length(x) > 0) {
       i <- eye.index + 1:dim(x)[2]
