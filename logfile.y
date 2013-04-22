@@ -28,6 +28,8 @@ const char *preamble =
 
 %error-verbose
 
+%expect 1
+
 %%
 
 datafile:
@@ -125,6 +127,8 @@ ERROR_ word COLON word {
 }
 | ERROR_ word {
     $$ = strb_build(strb_const("error(identifier=\""), $2, strb_const("\""), NULL); }
+| ERROR_ {
+    $$ = strb_const("error()"); }
 ;
 
 fluid:
